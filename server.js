@@ -22,13 +22,16 @@ app.post('/', (req, res) => {
 })
 
 
-
 // "/room" is here a commnication channel
 //Whenever someone connects this gets executed
+
 io.of("/Room").on('connection', socket => {
-  console.log('rishu')
+ 
+
     //socket. is used for client side,roomId,userId is sent by a client
-    socket.on('join-room', (roomId, userId) => {
+    socket.on('join-room', (roomId, userId ) => {
+       
+       
     if(usersInRoom.length>2) {
       console.log("memoryFull");
      // return("http://localhost:3000");
