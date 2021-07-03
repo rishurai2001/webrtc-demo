@@ -1,4 +1,5 @@
 const { memory } = require('console')
+const PORT=process.env.PORT|| 8000
 const express = require('express')
 const app = express()
 const server = require('http').Server(app)  //creates a new socket.io instance attached to the http server
@@ -63,4 +64,4 @@ io.of("/Room").on('connection', socket => {
 
 })
 
-server.listen(8000)
+server.listen(PORT)
