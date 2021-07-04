@@ -67,5 +67,5 @@ io.of("/Room").on('connection', socket => {
 })
 
 server.listen(PORT,()=>{
-  console.log("server running")
+  console.log("server running ${PORT}")
 })
