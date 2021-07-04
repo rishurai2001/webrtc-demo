@@ -1,0 +1,196 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto&display=swap");
+@import url("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css");
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+html,
+body {
+  height: 100%;
+  font-family: "Roboto", sans-serif;
+  border: white;
+  
+  scroll-padding-top: 70px;
+  background-position: left;
+  background-repeat: no-repeat;
+  background-size: cover;
+  
+  
+}
+.videoGrid {
+  display: flex;
+  justify-content: center;
+  height: 80vh;
+  align-items: center;
+  flex-wrap: wrap;
+}
+video {
+  display: block;
+  flex: 1;
+  object-fit: cover;
+  max-width: 600px; 
+ 
+  
+}
+.main {
+  height: 100vh;
+  display: flex;
+  
+}
+
+
+.roomScreen{
+  height:100vh;
+  width:100vw;
+  position: fixed;
+  display: flex;
+  border-width: medium;
+  border-color: deepskyblue;
+  background-color: rgba(9,40,68,255);
+}
+.videoChatBlock{
+  
+  width:80vw;
+  height:100vh;
+ 
+}
+.chatBlock{
+
+  width:20vw;
+  height:100vh;
+  background-color: rgba(9,40,68,255);
+  border-width: medium;
+  border-color: deepskyblue;
+}
+
+.myVideoGrid{
+  float:left;
+  height:'40vh';
+  position: fixed;
+  bottom: 0;
+}
+.mainControlsBlock {
+  display: flex;
+  margin-left: 35%;
+  height:60px;
+  width: fit-content; 
+  position: fixed;
+  bottom: 2%;
+ 
+}
+.mainControlsButton {
+  
+  display: flex;
+  flex-direction: column;
+  cursor: pointer;
+  /* padding: 10px 20px; */
+  width:65px;
+  height:65px;
+  justify-content: center;
+  align-items: center;
+  min-width: 50px;
+  transition: all 0.3s ease-in-out;
+  border-radius: 50%;
+  margin: 5px;
+  color:white;
+  background-color: rgb(0, 195, 255);
+ 
+ 
+}
+.mainControlsButton span {
+  margin-top: 10px;
+  display: block;
+  font-size: small;
+}
+.mainControlsButton:hover {
+  background-color: #34383b;
+}
+.mainControlsButton i {
+  font-size: 40px;
+}
+
+
+
+.header {
+  color: white;
+  font-size: large;
+  font-weight: bold;
+  text-align: center;
+  padding: 20px;
+  border-bottom: 2px solid #3d3d42;
+} 
+.chatWindow {
+  height:84vh;
+  flex-grow: 1;
+  overflow: auto;
+  padding-top: 10px; 
+  background-color:rgba(9,40,68,255);
+  border-width: medium;
+  border-color: deepskyblue;}
+.messageContainer {
+  padding: 5px 5px;
+  display: flex;
+  overflow: auto;
+  background-color: gold;
+}
+.messageContainer input {
+  flex-grow: 1;
+  background-color: white;
+  border: none;
+  color: blue;
+  user-select: none;
+  outline: none;
+  width: 20vw;
+  height:40px;
+}
+
+
+#liveMessage li {
+ 
+  border-radius: 15px;
+  padding: 8px 8px 8px 8px;
+  margin-top: 5px;
+  width:fit-content;
+  color: black;
+  max-width: 80%;
+
+}
+
+
+#myModal {
+  /* display: none; Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  right: 0;
+  
+  width:20vw;
+  overflow: auto; /* Enable scroll if needed */
+  
+  /* background-color:rgba(9,40,68,255); */
+  
+}
+
+
+/* The Close Button */
+.close {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
+#chatBoxIcon{
+  position: absolute;
+  top: 10%;
+  right: 2%;
+}
+#u{
+  padding-top: 15%;
+}
