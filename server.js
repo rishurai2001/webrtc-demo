@@ -5,7 +5,7 @@ const app = express()
 const server = require('http').Server(app)  //creates a new socket.io instance attached to the http server
 const io = require('socket.io')(server)  //The Server instance
 const { v4: uuidV4 } = require('uuid')
-
+const path=require('path')
 
 const usersInRoom = [];
 
@@ -14,7 +14,11 @@ app.use(express.urlencoded({ extended: false }));
 app.use(express.static('public'))
 
 if(process.env.NODE_ENV==='production'){
-  app.use(express.static('client/build')) 
+  console.log("in production")
+  app.use(express.static('client/build'));
+  app.get('*',function(req,res){
+    res.sendFile(path.join(__dirname,'client/build','index.html'))
+  });
 }
 
 //app.post to handle POST requests
