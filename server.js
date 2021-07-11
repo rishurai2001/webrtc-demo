@@ -10,7 +10,9 @@ const mongoose = require("mongoose");
 // const { MONGODB_URI } = require("./config");
  const Message = require('./models/Message');
  const authRoute = require("./routes/auth");
-const DB="mongodb+srv://rishurai:-sBCz2gvsV!$NnE@video-engage-app.vj0ar.mongodb.net/mern-app?retryWrites=true&w=majority"
+ var dotenv=require('dotenv').config();
+ var url = process.env.MONGODB_URI;
+// const DB="mongodb+srv://rishurai:-sBCz2gvsV!$NnE@video-engage-app.vj0ar.mongodb.net/mern-app?retryWrites=true&w=majority"
 const usersInRoom = [];
 const router = express.Router();
 app.use(express.json());
@@ -20,7 +22,7 @@ app.use(authRoute);
 
 //DB connection
 mongoose
-  .connect(DB, {
+  .connect(url, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
     useFindAndModify: false,
