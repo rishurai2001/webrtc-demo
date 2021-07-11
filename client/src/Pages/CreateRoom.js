@@ -1,12 +1,11 @@
 
 import axios from 'axios'
-import { useState } from 'react'
 import { useHistory } from 'react-router-dom'
 import '../Styles/CreateRoom.css'
 function CreateRoom(props) {
 
     
-    const [roomId,setRoomId]=useState(null);
+   
    
     const history = useHistory();
     const makeRoom = (event) => {

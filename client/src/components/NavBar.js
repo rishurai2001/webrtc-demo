@@ -1,7 +1,7 @@
-import React, { useContext,useState,useEffect } from 'react';
-import {Link,Redirect} from 'react-router-dom'
+import React, { useContext,useEffect } from 'react';
+import {Link} from 'react-router-dom'
 import { AuthContext } from "../context/AuthContext";
-const NavBar = (props) => {
+const NavBar = () => {
   const { user } = useContext(AuthContext);
   
     let authenticate;
@@ -38,7 +38,8 @@ const NavBar = (props) => {
     
        
        else {
-         <Redirect to="/Home" />
+         console.log("login");
+         window.location.href="./Login"
        }
      
    

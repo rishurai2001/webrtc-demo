@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { useHistory } from 'react-router-dom'
 
-const JoinRoom = (props) => {
+const JoinRoom = () => {
     const [roomID, setroomID] = useState('');
     const history = useHistory();
 

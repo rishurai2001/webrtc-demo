@@ -2,7 +2,6 @@ import React, { useEffect, useRef,useContext} from 'react'
 import io from "socket.io-client";
 import Peer from 'peerjs';
 import '../Styles/Room.css'
-import { useHistory } from 'react-router-dom'
 import { AuthContext } from "../context/AuthContext";
 
 function Room(props) {
@@ -185,8 +184,7 @@ function Room(props) {
     }, [])
 
     function shareScreen() {
-        {
-            // @ts-ignore
+              
             navigator.mediaDevices.getDisplayMedia({
                 video: {
                     cursor: 'always'
@@ -203,7 +201,7 @@ function Room(props) {
                 console.log(myPeer.current.id)
 
             });
-        }
+        
     }
 
     function connectToNewUser(userId, stream) {
@@ -214,7 +212,6 @@ function Room(props) {
         const video = document.createElement('video')
         video.style.width = '100%'
         video.style.height = '100%'
-        // video.style.border = '2px solid'
         video.style.margin = '5px'
 
 
@@ -281,7 +278,10 @@ function Room(props) {
 
     // //console.log(screenStream);
 
+   const copyRoomIdToClipBoard=()=>{
+    navigator.clipboard.writeText(ROOM_ID);
 
+   }
 
     const muteUnmute = () => {
         if(myVideo===null || myVideo.srcObject===null) {
@@ -322,8 +322,14 @@ function Room(props) {
 
             <div className="videoChatBlock">
                 <div ref={videoGrid} className="videoGrid" ></div>
-                <div ref={myVideoGrid} className="myVideoGrid" ></div>
+                <div ref={myVideoGrid} className="myVideoGrid" >
+                
+                </div>
                 <div className="mainControlsBlock">
+                
+        
+
+
                     <div
                         className="mainControlsButton"
                         id="muteButton"
@@ -345,7 +351,7 @@ function Room(props) {
 
 
                     </div>
-                    <div
+                    {/* <div
                         className="mainControlsButton"
                         id="shareScreen"
                         onClick={shareScreen}
@@ -353,7 +359,7 @@ function Room(props) {
                         <i class="bi bi-cast">
 
                         </i>
-                    </div>
+                    </div> */}
                     <div className="mainControlsButton"
                         id="leaveMeeting" >
                         <a href='/'>
@@ -362,6 +368,26 @@ function Room(props) {
 
                         </a>
                     </div>
+
+                    {/* <div
+                        className="mainControlsButton"
+                        id="copyClipboard"
+                        onClick={copyRoomIdToClipBoard}
+                        style={{marginLeft:"25vw"}}
+                    >    */}
+                  
+                       <span 
+                       title="Copy Meeting Id"
+                       className="mainControlsButton"
+                        onClick={copyRoomIdToClipBoard}
+                        style={{marginLeft:"25vw"}}
+                    >
+                       <img src="https://img.icons8.com/ios-glyphs/30/ffffff/copy.png" style={{height:'40px'}}/>
+                       </span>
+                        
+
+                    {/* </div> */}
+
 
                 </div>
 
