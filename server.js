@@ -16,7 +16,7 @@ const router = express.Router();
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(express.static('public'))
-
+app.use(authRoute);
 
 //DB connection
 mongoose
@@ -27,7 +27,7 @@ mongoose
     useCreateIndex:true,
   })
   .then((result) => {
-    //  console.log(result);
+     console.log(result);
   })
   .catch((err) => {
     console.log(err);
@@ -36,15 +36,15 @@ mongoose
  
 
 //Server static assets if in production
-if (process.env.NODE_ENV === 'production') 
-{
+// if (process.env.NODE_ENV === 'development') 
+// {
   // Set static folder
   app.use(express.static('client/build'));
 
   app.get('/*', (req, res) => {
     res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
   });
-}
+// }
 
 
 
@@ -166,7 +166,7 @@ io.of("/Room").on('connection', (socket) => {
   })
 
 })
-app.use(authRoute);
+
 app.use(function(req, res, next) {
   var err = new Error('Not Found');
   err.status = 404;

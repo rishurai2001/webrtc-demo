@@ -64,7 +64,7 @@ const
                             <div className="cards">
                                 <li className="stats__card">
                                     <div className="stats__icon -red"></div>
-                                    <p> </p>
+                                    <p>Meet upto three peoples together</p>
                                 </li>
                             </div>
 
