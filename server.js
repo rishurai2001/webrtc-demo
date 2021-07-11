@@ -10,9 +10,7 @@ const mongoose = require("mongoose");
 // const { MONGODB_URI } = require("./config");
  const Message = require('./models/Message');
  const authRoute = require("./routes/auth");
- var dotenv=require('dotenv').config();
- var url = process.env.MONGODB_URI;
- const DB="mongodb+srv://rishurai:-sBCz2gvsV!$NnE@video-engage-app.vj0ar.mongodb.net/mern-app?retryWrites=true&w=majority"
+const DB="mongodb+srv://rishurai:-sBCz2gvsV!$NnE@video-engage-app.vj0ar.mongodb.net/mern-app?retryWrites=true&w=majority"
 const usersInRoom = [];
 const router = express.Router();
 app.use(express.json());
@@ -38,7 +36,7 @@ mongoose
  
 
 //Server static assets if in production
-if (process.env.NODE_ENV === 'production') 
+ if (process.env.NODE_ENV === 'production') 
 {
   // Set static folder
   app.use(express.static('client/build'));
