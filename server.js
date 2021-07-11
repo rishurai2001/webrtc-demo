@@ -19,8 +19,7 @@ app.use(express.static('public'))
 
 
 //DB connection
-mongoose
-  .connect(DB, {
+mongoose.connect( process.env.MONGODB_URI || 'mongodb://localhost/my_database', {
     useNewUrlParser: true,
     useUnifiedTopology: true,
     useFindAndModify: false,
@@ -35,16 +34,7 @@ mongoose
   });
  
 
-//Server static assets if in production
-if (process.env.NODE_ENV === 'production') 
-{
-  // Set static folder
-  app.use(express.static('client/build'));
 
-  app.get('/*', (req, res) => {
-    res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
-  });
-}
 
 
 
@@ -172,7 +162,17 @@ app.use(function(req, res, next) {
   err.status = 404;
   next(err);
 });
+//Server static assets if in production
+if (process.env.NODE_ENV === 'production') 
+{
+  // Set static folder
+  app.use(express.static('client/build'));
+
+  app.get('/*', (req, res) => {
+    res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
+  });
+}
 server.listen(PORT,()=>{
-  console.log(`server running ${PORT}`)
+  console.log(`server running at ${PORT}`)
 })
 //e680ba76-b6aa-4fe2-9711-8ee78aaa81b8
