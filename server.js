@@ -10,7 +10,6 @@ const mongoose = require("mongoose");
 // const { MONGODB_URI } = require("./config");
  const Message = require('./models/Message');
  const authRoute = require("./routes/auth");
-const { db } = require('./models/Message')
 const DB="mongodb+srv://rishurai:-sBCz2gvsV!$NnE@video-engage-app.vj0ar.mongodb.net/mern-app?retryWrites=true&w=majority"
 const usersInRoom = [];
 const router = express.Router();
@@ -20,7 +19,8 @@ app.use(express.static('public'))
 
 
 //DB connection
-mongoose.connect( DB , {
+mongoose
+  .connect(DB, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
     useFindAndModify: false,
@@ -35,7 +35,16 @@ mongoose.connect( DB , {
   });
  
 
+//Server static assets if in production
+if (process.env.NODE_ENV === 'production') 
+{
+  // Set static folder
+  app.use(express.static('client/build'));
 
+  app.get('/*', (req, res) => {
+    res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
+  });
+}
 
 
 
@@ -163,17 +172,7 @@ app.use(function(req, res, next) {
   err.status = 404;
   next(err);
 });
-//Server static assets if in production
-if (process.env.NODE_ENV === 'production') 
-{
-  // Set static folder
-  app.use(express.static('client/build'));
-
-  app.get('/*', (req, res) => {
-    res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
-  });
-}
 server.listen(PORT,()=>{
-  console.log(`server running at ${PORT}`)
+  console.log(`server running ${PORT}`)
 })
 //e680ba76-b6aa-4fe2-9711-8ee78aaa81b8
