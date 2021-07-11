@@ -1,0 +1,13 @@
+.left{
+    float:left;
+    height: 80vh;
+    background-color: aqua;
+    width:20%;
+    overflow: auto;
+}
+.right{
+    float:left;
+    height: auto;
+    background-color: rgb(202, 202, 202);
+    width:80%;
+}

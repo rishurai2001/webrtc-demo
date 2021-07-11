@@ -1,13 +1,14 @@
-import React, { useEffect, useRef } from 'react'
+import React, { useEffect, useRef,useContext} from 'react'
 import io from "socket.io-client";
 import Peer from 'peerjs';
-
-
-
+import '../Styles/Room.css'
+import { useHistory } from 'react-router-dom'
+import { AuthContext } from "../context/AuthContext";
 
 function Room(props) {
-
-    const ROOM_ID = props.match.params.roomId
+    const { user } = useContext(AuthContext);
+    console.log(user.username);
+    const ROOM_ID = props.match.params.roomId;
 
     const myPeer = useRef();
     const socket = useRef();
@@ -67,6 +68,7 @@ function Room(props) {
 
                 connectToNewUser(userId, stream)
             })
+           
         })
 
 
@@ -74,19 +76,79 @@ function Room(props) {
             if (peers.current[userId])
                 peers.current[userId].close()
         })
+        socket.current.on('room-full',(msg)=>{
+            console.log("room Full");
+            // alert("Room that u are joing is full , Plaese try after some time");
+        })
+        socket.current.on("init", (msg) => {
+            console.log(msg);
+            for (let i =  msg.length-1; i>=0; i--) {
+               
+                let sp = document.createElement("span");
+                let time=msg[i].createdAt;
+                sp.innerHTML=time.slice(0,9)+" "+ time.slice(12,16);
+                sp.style.fontSize='8px';
+    
+                let li = document.createElement("li");
+              
+                li.innerHTML =msg[i].content; 
+                li.style.backgroundColor = 'lavender';
+                li.style.margin='5px';
+                
+
+                let divmsg = document.createElement("div");
+                divmsg.style.backgroundColor='white';
+                divmsg.style.marginLeft = "5px";
+                divmsg.style.padding="2px";
+                // divmsg.innerHTML =time.slice(12,16);
+                divmsg.style.width='fit-content';
+                divmsg.style.borderRadius='5px';
+                divmsg.style.marginTop='5px';
+                divmsg.style.alignSelf='flex-start';
+                divmsg.style.textAlign='end';
+
+                divmsg.append(li,sp);
+
+                document.getElementById("liveMessage").append(divmsg);
+
+                // document.getElementById("liveMessage").append(sp);
+                // document.getElementById("liveMessage").append(li);
+                
+                var chatBox = document.getElementById("chatWindow");
+                chatBox.scrollTop = chatBox.scrollHeight;
+            }
+        });
 
         myPeer.current.on('open', id => {
-            socket.current.emit('join-room', ROOM_ID, id )
+            socket.current.emit('join-room', ROOM_ID, id,user.username )
            
         })
 
-        socket.current.on("createMessage", (msg) => {
-            console.log(67);
+        socket.current.on("createMessage", (msg,sender) => {
+            console.log(msg);
+            alert(sender+"sent a messasge");
+            // let sp = document.createElement("span");
+            // sp.innerHTML = sender ;
+            // sp.style.backgroundColor = 'green';
+            // sp.style.marginLeft = "5px";
+            
             let li = document.createElement("li");
-            li.innerHTML = msg;
+            li.innerHTML =msg.content;
             li.style.backgroundColor = 'lavender';
-            li.style.marginLeft = "5px";
-            document.getElementById("liveMessage").append(li);
+            
+             
+            let divmsg = document.createElement("div");
+            divmsg.style.backgroundColor='white';
+            divmsg.style.marginLeft = "5px";
+            divmsg.style.padding="5px";
+            divmsg.innerHTML = "   "+sender+":" ;
+            divmsg.style.width='fit-content';
+            divmsg.style.borderRadius='5px';
+            divmsg.style.marginTop='5px';
+            divmsg.style.alignSelf='flex-start';
+            divmsg.append(li);
+            document.getElementById("liveMessage").append(divmsg);
+           
             var chatWindow = document.getElementById("chatWindow");
             chatWindow.scrollTop = chatWindow.scrollHeight;
         });
@@ -98,11 +160,11 @@ function Room(props) {
 
             console.log(msg.value);
             if (e.key === 'Enter' && msg !== null && msg.value !== "") {
-                socket.current.emit("message", msg.value);
+                socket.current.emit("message", { roomId: ROOM_ID, content: msg.value });
                 let li = document.createElement("li");
                 li.innerHTML = msg.value;
-                li.style.backgroundColor = 'blue';
-                li.style.marginLeft = "100px";
+                li.style.backgroundColor = 'deepskyblue';
+                li.style.marginLeft = "40%";
                 li.style.color = 'white';
                 li.style.fontWeight = 'bold';
                 document.getElementById("liveMessage").append(li);

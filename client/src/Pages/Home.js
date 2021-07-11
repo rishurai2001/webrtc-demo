@@ -57,7 +57,7 @@ const
                             <div className="cards">
                                 <li className="stats__card">
                                     <div className="stats__icon -red "><i class="bi bi-chat" style={{}}></i></div>
-                                    <p> this app is bootstraped with create-react-app nodeJs</p>
+                                    <p> This app is bootstraped with create-react-app </p>
                                 </li>
                             </div>
 
@@ -71,7 +71,7 @@ const
                             <div className="col-12 col-lg-4 d-flex justify-content-center">
                                 <li className="stats__card">
                                     <div className="stats__icon -red"></div>
-                                    <p> </p>
+                                    <p>All in one app,Do video call with live chat features,access the chat before as well as after the meet </p>
                                 </li>
                             </div>
 

@@ -1,7 +1,49 @@
-import React from 'react';
-import {Link} from 'react-router-dom'
+import React, { useContext,useState,useEffect } from 'react';
+import {Link,Redirect} from 'react-router-dom'
+import { AuthContext } from "../context/AuthContext";
+const NavBar = (props) => {
+  const { user } = useContext(AuthContext);
+  
+    let authenticate;
 
-const NavBar = () => {
+    useEffect(() => {
+      if(user===null) authenticate=false;
+      else authenticate=true;
+      
+    }, [])
+  
+  
+  const listStyle = {
+    background: 'deepSkyBlue',
+    display: 'flex',
+    padding: '10px 12px',
+    borderRadius: '20px',
+    // height:'7vh',
+    fontSize:'80%',
+    
+  }
+   
+   const handleLogin=()=>{
+    
+    
+       if(authenticate) {
+        
+         authenticate=false;
+         localStorage.clear();
+         console.log(localStorage);
+        
+         window.location.href="./"
+        return;
+       }
+    
+       
+       else {
+         <Redirect to="/Home" />
+       }
+     
+   
+
+   }
     const navStyle={
                display:'flex',
                backgroundColor:'rgba(9,40,68,255)',
@@ -9,36 +51,55 @@ const NavBar = () => {
                padding:'6px 12px',
                zIndex:'100',
                top:0,
-               position:'fixed'
+               position:'fixed',
+                
                
                
     }
-    const listStyle = {
-      background: 'deepSkyBlue',
-      display: 'flex',
-      padding: '10% 12px',
-      borderRadius: '20px',
-      // height:'7vh',
-      fontSize:'80%',
-      
-    }
+    
     return (
        
         <nav className="  container mx-auto justify-between py-4" style={navStyle} >
             
             
+         
+
             <Link to="/">
-                <img className="ml-5 " style={{height:'50px'}} src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTYPaAbJZ-drUMdc8QH1pCxTYC6JEj_phuuQw&usqp=CAU"/>
-            </Link>
+            <i class="bi bi-house-fill ml-10 text-5xl"></i>
+              </Link>
            
            
             <ul className="flex items-center">
-                <li className="ml-5 text-white" >
-                  <Link to="/CreateRoom" style={listStyle} >CREATE A MEETING </Link>
+               
+
+                <li className="mr-5 text-white" >
+                  <Link to="/CreateRoom" style={listStyle} >CREATE A MEET </Link>
                 </li>
-                <li className="ml-10 mr-10 text-white" >
-                  <Link to="/JoinRoom" style={listStyle}  >JOIN A MEETING</Link>
-                </li> 
+                <li className="mr-5 text-white" >
+                  <Link to="/JoinRoom" style={listStyle}  >JOIN A MEET</Link>
+                </li>
+                   <li className="mr-5 text-white" >
+                  <Link to="/Chat" style={listStyle} >CHAT</Link>
+               </li> 
+                <li className=" mr-10 text-white">
+                  
+                   <button id="button" onClick={handleLogin}  >
+                     {user?
+                      <div>
+                        {/* <img src="https://w7.pngwing.com/pngs/81/570/png-transparent-profile-logo-computer-icons-user-user-blue-heroes-logo-thumbnail.png" style={{height:'50px',width:'50px',marginTop:'5px'}}/> */}
+                        <i class="bi bi-person-circle " >
+                        
+                        </i><br/>Logout
+                        
+                      </div>:
+                      <div>
+                       <i class="bi bi-shield-lock"></i>
+                        <br/> Login
+                      </div>}
+                   </button>
+                   
+                   
+                </li>
 
             </ul>
                        

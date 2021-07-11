@@ -5,16 +5,18 @@
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "buid":"cd client && npm run build",
+    "buid": "cd client && npm run build",
     "install-client": "cd client && npm install",
-    "heroku-postbuild":"npm run install-client && npm run build",
+    "heroku-postbuild": "npm run install-client && npm run build",
     "start": "node server.js",
-    "client":"cd client && npm start"
+    "client": "cd client && npm start"
   },
   "author": "Rishu Rai",
   "license": "ISC",
   "dependencies": {
+    "bcrypt": "^5.0.1",
     "express": "^4.17.1",
+    "mongoose": "^5.13.2",
     "nodemon": "^2.0.8",
     "socket.io": "^4.1.2",
     "uuid": "^8.3.2"
