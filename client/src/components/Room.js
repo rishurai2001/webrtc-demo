@@ -126,7 +126,7 @@ function Room(props) {
 
         socket.current.on("createMessage", (msg,sender) => {
             console.log(msg);
-            alert(sender+"sent a messasge");
+            //alert(sender+"sent a messasge");
             // let sp = document.createElement("span");
             // sp.innerHTML = sender ;
             // sp.style.backgroundColor = 'green';
