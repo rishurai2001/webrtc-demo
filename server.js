@@ -11,7 +11,7 @@ const dotenv = require("dotenv")
 dotenv.config()
  const Message = require('./models/Message');
  const authRoute = require("./routes/auth");
-const DB=`mongodb+srv://${process.env.DB_USERNAME}:${process.env.DB_PASSWORD}@coding-blog-t0xf0.mongodb.net/<dbname>`
+const DB= `mongodb+srv://${process.env.DB_USERNAME}:${process.env.DB_PASSWORD}@video-engage-app.vj0ar.mongodb.net/mern-app?retryWrites=true&w=majority`
 const usersInRoom = [];
 const router = express.Router();
 app.use(express.json());
@@ -37,7 +37,7 @@ mongoose
  
 
 //Server static assets if in production
- if (process.env.NODE_ENV === 'production') 
+//  if (process.env.NODE_ENV === 'production') 
 {
   // Set static folder
   app.use(express.static('client/build'));
