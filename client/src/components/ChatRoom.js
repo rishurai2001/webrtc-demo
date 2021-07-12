@@ -1,13 +1,14 @@
-import React, { useEffect, useRef } from 'react'
+import React, { useEffect, useContext,useRef } from 'react'
 import io from "socket.io-client";
 import Peer from 'peerjs';
 import '../Styles/ChatRoom.css'
-
+import { AuthContext } from "../context/AuthContext";
 
 
 function Room(props) {
-
+    
     const ROOM_ID = props.match.params.roomId
+    const { user } = useContext(AuthContext);
 
     const myPeer = useRef();
     const socket = useRef();
@@ -28,7 +29,7 @@ function Room(props) {
 
 
         myPeer.current.on('open', id => {
-            socket.current.emit('message-room', ROOM_ID, id)
+            socket.current.emit('message-room', ROOM_ID, id,user.username)
 
         })
 
@@ -38,34 +39,26 @@ function Room(props) {
                
                 let sp = document.createElement("span");
                 let time=msg[i].createdAt;
-                sp.innerHTML=time.slice(0,9)+" "+ time.slice(12,16);
+                sp.innerHTML=time.slice(0,10)+"   "+ time.slice(12,17);
                 sp.style.fontSize='8px';
     
                 let li = document.createElement("li");
-              
-                li.innerHTML =msg[i].content; 
+                li.innerHTML =msg[i].sender+ ":"+ "<br/>"+ msg[i].content; 
                 li.style.backgroundColor = 'lavender';
                 li.style.margin='5px';
                 
 
                 let divmsg = document.createElement("div");
-                divmsg.style.backgroundColor='white';
-                divmsg.style.marginLeft = "5px";
-                divmsg.style.padding="2px";
-                // divmsg.innerHTML =time.slice(12,16);
-                divmsg.style.width='fit-content';
-                divmsg.style.borderRadius='5px';
-                divmsg.style.marginTop='5px';
-                divmsg.style.alignSelf='flex-start';
-                divmsg.style.textAlign='end';
+                divmsg.className="initMessages"
+                if((msg[i].sender).localeCompare(user.name)){
 
+                    divmsg.style.backgroundColor='deepskyblue'
+                    divmsg.style.alignSelf='flex-end';
+                    li.style.backgroundColor='white';
+                }
                 divmsg.append(li,sp);
 
-                document.getElementById("liveMessage").append(divmsg);
-
-                // document.getElementById("liveMessage").append(sp);
-                // document.getElementById("liveMessage").append(li);
-                
+                document.getElementById("liveMessage").append(divmsg);                
                 var chatBox = document.getElementById("chatBox");
                 chatBox.scrollTop = chatBox.scrollHeight;
             }
@@ -74,11 +67,24 @@ function Room(props) {
 
 
         socket.current.on("createMessage", (msg) => {
-            console.log(67);
+            
             let li = document.createElement("li");
-            li.innerHTML = msg.content;
+            li.innerHTML =msg.sender+":"+ "<br/>" + msg.content;
             li.style.backgroundColor = 'lavender';
-            document.getElementById("liveMessage").append(li);
+            li.style.margin='8px';
+            
+            let sp = document.createElement("span");
+            let today=new Date();
+             
+            sp.innerHTML=(today.getHours()) + ":" + today.getMinutes() ;;
+            sp.style.fontSize='12px';
+            sp.style.paddingRight='5px';
+
+            let divmsg = document.createElement("div");
+            divmsg.className="initMessages"
+            
+            divmsg.append(li,sp);
+            document.getElementById("liveMessage").append(divmsg);
             var chatBox = document.getElementById("chatBox");
             chatBox.scrollTop = chatBox.scrollHeight;
         });
@@ -93,10 +99,12 @@ function Room(props) {
                 socket.current.emit("message", { roomId: ROOM_ID, content: msg.value });
                 let li = document.createElement("li");
                 li.innerHTML = msg.value;
-                li.style.backgroundColor = 'blue';
-
+                li.style.backgroundColor = 'deepskyblue';
                 li.style.color = 'white';
-
+                li.style.padding='5px';
+                li.style.marginLeft = "40%";
+                li.style.marginBottom='10px';
+                
 
 
                 document.getElementById("liveMessage").append(li);
@@ -146,14 +154,15 @@ function Room(props) {
                 </div>
 
                 <div className="chatBoxBottom">
-                    <textarea
-                        className="chatMessageInput"
-                        placeholder="write something..."
-                        id="chat_message"
-                    ></textarea>
-                    {/* <button className="chatSubmitButton"  >
-                        Send
-                    </button> */}
+                    
+                    <input
+                            type="text"
+                            className="chatMessageInput"
+                            id="chat_message"
+                            placeholder="Type message here.."
+
+                        />
+                   
 
                 </div>
             </div>

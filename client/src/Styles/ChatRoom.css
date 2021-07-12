@@ -1,97 +1,4 @@
-/* .messenger {
-  height: calc(100vh - 30px);
-  display: flex;
-  
-}
-
-.chatMenu {
-  flex: 0.3;
-  background-color: aqua;
-}
-  .chatBox{
-    display: flex;
-   
-    flex-direction: column;
-    flex:0.7;
-    justify-content: space-between;
-    position: relative;
-    padding-top: 10px;
-    background-color:gold;
-  }
-  .chatMenuWrapper,
-.chatBoxWrapper,
-.chatOnlineWrapper {
-  padding: 10px;
-  height: 100%;
-}
-.chatBoxTop {
-  height: 100%;
-  overflow-y: scroll;
-  padding-right: 10px;
-}
-
-.chatBoxBottom {
-  margin-top: 5px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
-
-
-
-.chatMessageInput {
-  width: 80%;
-  height: 90px;
-  padding: 10px;
-}
-
-.chatSubmitButton {
-  width: 70px;
-  height: 40px;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  background-color: teal;
-  color: white; 
-}
-     .messageContainer {
-        padding: 5px 5px;
-        display: flex;
-        overflow: auto;
-        background-color: gold;
-        position: fixed;
-        bottom:0;
-        align-content: center;
-        align-items: baseline;
-        margin-left: 5%;
-        width: 70%;
-      }
-      .messageContainer input {
-        flex-grow: 1;
-        background-color: white;
-        border: none;
-        color: blue;
-        user-select: none;
-        outline: none;
-        width: 20vw;
-        height:40px;
-      }
-      
-      
-      #liveMessage li {
-       
-        border-radius: 15px;
-        padding: 8px 8px 8px 8px;
-        margin-top: 5px;
-        width:fit-content;
-        color: black;
-        max-width: 80%;
-       
-        display: flex;
-        align-items: flex-end;
-      } */
-      
+    
       .messenger {
         height: calc(100vh - 70px);
         display: flex;
@@ -119,6 +26,8 @@
         margin-left: 15%; 
         margin-right: 15%;
         margin-top: 11vh;
+        position: fixed;
+        width: 75vw;
       }
       
       .chatBoxWrapper {
@@ -133,7 +42,7 @@
         overflow-y: scroll;
         padding-right: 10px;
         background-color:rgb(9, 40, 68);
-        padding-top: 10vh;
+        padding-top: 12px;
         display: flex;
        flex-direction: column;
        
@@ -150,13 +59,13 @@
       }
       
       .chatMessageInput {
-        width: 70vw;
-        height: 10%;
+        width: 75vw;
+        height: 10vh;
         padding: 10px;
         margin-bottom: 10px;
-    border-radius: 8px;
+    border-radius: 10px;
     border-color: black;
-    border-width: thin;
+    border-width: medium;
       }
       
       .chatSubmitButton {
@@ -193,9 +102,10 @@
         
         /* align-self: flex-end; */
         display: flex;
-    flex-direction: column;
+        flex-direction: column;
         
       }
+      
        
       @media screen and (max-width: 768px) {
         .chatMenu {
@@ -210,3 +120,4 @@
           flex: 10;
         }
       }
+     

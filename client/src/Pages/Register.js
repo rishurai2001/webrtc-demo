@@ -30,8 +30,8 @@ export default function Register(props) {
 
         
       } catch (err) {
-        // console.log(err);
-        console.log("found !!")
+        
+      alert("email-Id already registered !!")
       }
     }
   };

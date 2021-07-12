@@ -39,37 +39,11 @@ function App() {
 
           <Route exact path="/CreateRoom"> {user ? <CreateRoom /> : <Login />}</Route>
           <Route exact path="/JoinRoom"> {user ? <JoinRoom /> : <Login />}</Route>
-          {/* <Route exact path="/JoinRoom" component={JoinRoom} /> */}
           <Route exact path="/Chat" component={Chat} />
           <Route exact path="/Chat/:roomId" component={ChatRoom} />
         </div>
       </Switch>
     </Router>
-
-    // < Router >
-    // <Switch>
-    // <div><Route exact path="/Room/:roomId"  component= {Room} />  </div>
-    //   <div>  
-    //     <NavBar />
-
-
-    //     <Route exact path="/" component={Home} />
-    //     <Route path="/login">{user ? <Redirect to="/" /> : <Login />}</Route>
-    //     <Route path="/register">
-    //       {user ? <Redirect to="/" /> : <Register />}
-    //     </Route>
-    //     <Route exact path="/CreateRoom"> {user ? <CreateRoom/>:<Login/>}</Route>
-    //     <Route exact path="/Chat/:roomId" component={ChatRoom} />
-    //     </div>
-
-
-
-    // </Switch> 
-    //  </Router >
-
-
-
-
   );
 }
 

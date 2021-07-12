@@ -69,6 +69,11 @@ function Room(props) {
             })
            
         })
+        
+        myPeer.current.on('open', id => {
+            socket.current.emit('join-room', ROOM_ID, id,user.username )
+           
+        })
 
 
         socket.current.on('user-disconnected', userId => {
@@ -96,56 +101,38 @@ function Room(props) {
                 
 
                 let divmsg = document.createElement("div");
-                divmsg.style.backgroundColor='white';
-                divmsg.style.marginLeft = "5px";
-                divmsg.style.padding="2px";
-                // divmsg.innerHTML =time.slice(12,16);
-                divmsg.style.width='fit-content';
-                divmsg.style.borderRadius='5px';
-                divmsg.style.marginTop='5px';
-                divmsg.style.alignSelf='flex-start';
-                divmsg.style.textAlign='end';
+                divmsg.className="initMessages";                
+                if((msg[i].sender).localeCompare(user.name)){
 
+                    divmsg.style.backgroundColor='deepskyblue'
+                    divmsg.style.alignSelf='flex-end';
+                }
+                
                 divmsg.append(li,sp);
 
                 document.getElementById("liveMessage").append(divmsg);
-
-                // document.getElementById("liveMessage").append(sp);
-                // document.getElementById("liveMessage").append(li);
-                
                 var chatBox = document.getElementById("chatWindow");
                 chatBox.scrollTop = chatBox.scrollHeight;
             }
         });
 
-        myPeer.current.on('open', id => {
-            socket.current.emit('join-room', ROOM_ID, id,user.username )
-           
-        })
+       
 
-        socket.current.on("createMessage", (msg,sender) => {
-            console.log(msg);
-            //alert(sender+"sent a messasge");
-            // let sp = document.createElement("span");
-            // sp.innerHTML = sender ;
-            // sp.style.backgroundColor = 'green';
-            // sp.style.marginLeft = "5px";
-            
-            let li = document.createElement("li");
-            li.innerHTML =msg.content;
+        socket.current.on("createMessage", (msg) => {
+             let li = document.createElement("li");
+            li.innerHTML =msg.sender+":"+ "<br/>" + msg.content;;
             li.style.backgroundColor = 'lavender';
-            
-             
-            let divmsg = document.createElement("div");
-            divmsg.style.backgroundColor='white';
-            divmsg.style.marginLeft = "5px";
-            divmsg.style.padding="5px";
-            divmsg.innerHTML = "   "+sender+":" ;
-            divmsg.style.width='fit-content';
-            divmsg.style.borderRadius='5px';
-            divmsg.style.marginTop='5px';
-            divmsg.style.alignSelf='flex-start';
-            divmsg.append(li);
+            li.style.margin='8px';
+            li.style.overflow='break-word';
+            let sp = document.createElement("span");
+            let today=new Date();
+            sp.innerHTML=(today.getHours()) + ":" + today.getMinutes() ;;
+            sp.style.fontSize='12px';
+            sp.style.paddingRight='5px';
+
+             let divmsg = document.createElement("div");
+            divmsg.className="initMessages"
+            divmsg.append(li,sp);
             document.getElementById("liveMessage").append(divmsg);
            
             var chatWindow = document.getElementById("chatWindow");
@@ -280,6 +267,7 @@ function Room(props) {
 
    const copyRoomIdToClipBoard=()=>{
     navigator.clipboard.writeText(ROOM_ID);
+    
 
    }
 

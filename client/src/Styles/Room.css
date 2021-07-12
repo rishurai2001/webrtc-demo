@@ -131,12 +131,14 @@
     border-radius: 5px;
     padding: 8px 8px 8px 8px;
     margin-top: 5px;
-    width:fit-content;
+    /* width:fit-content; */
     color: black;
     display: flex;
     flex-direction: column;
     align-self: flex-end;
-    /* max-width: 80%; */
+    overflow-wrap: break-word;
+    word-break: break-word;
+     
   
   }
   
