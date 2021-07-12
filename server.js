@@ -7,10 +7,11 @@ const io = require('socket.io')(server)  //The Server instance
 const { v4: uuidV4 } = require('uuid')
 const path=require('path')
 const mongoose = require("mongoose");
-// const { MONGODB_URI } = require("./config");
+const dotenv = require("dotenv")
+dotenv.config()
  const Message = require('./models/Message');
  const authRoute = require("./routes/auth");
-const DB="mongodb+srv://rishurai:-sBCz2gvsV!$NnE@video-engage-app.vj0ar.mongodb.net/mern-app?retryWrites=true&w=majority"
+const DB=`mongodb+srv://${process.env.DB_USERNAME}:${process.env.DB_PASSWORD}@coding-blog-t0xf0.mongodb.net/<dbname>`
 const usersInRoom = [];
 const router = express.Router();
 app.use(express.json());
@@ -95,6 +96,7 @@ io.of("/Room").on('connection', (socket) => {
        
         roomId: msg.roomId,
         content: msg.content,
+        sender:username,
       });
   
       // Save the message to the database.
@@ -118,7 +120,7 @@ io.of("/Room").on('connection', (socket) => {
   })
 
 
- socket.on('message-room', (roomId, userId ) => {
+ socket.on('message-room', (roomId, userId,username ) => {
        
   Message.find({"roomId" : roomId}).sort({createdAt:-1}).limit(10).exec((err, messages) => {
     if (err) return console.error(err);
@@ -143,6 +145,7 @@ io.of("/Room").on('connection', (socket) => {
        
         roomId: msg.roomId,
         content: msg.content,
+        sender:username,
       });
   
       // Save the message to the database.
@@ -150,7 +153,7 @@ io.of("/Room").on('connection', (socket) => {
         if (err) return console.error(err);
       });
       console.log("messdage saved to db");
-      socket.broadcast.to(roomId).emit("createMessage", message);
+      socket.broadcast.to(roomId).emit("createMessage", message,username);
     })
     
     socket.on('disconnect', () => {
