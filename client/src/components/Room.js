@@ -29,9 +29,6 @@ function Room(props) {
         myVideo.style.margin = '10px'
            
         socket.current = io.connect("/Room");
-
-        console.log('client side', myPeer.current);
-
         navigator.mediaDevices.getUserMedia({
             video: true,
             audio: true
@@ -42,12 +39,13 @@ function Room(props) {
 
             myPeer.current.on('call', call => {
 
-                //When I get a call, I reply with my stream
+                //When user gets a call, he reply with his stream
                 call.answer(stream)
                 const video = document.createElement('video')
                 video.style.width = '100%'
                 video.style.height = '100%'
                 video.style.margin = '5px'
+
                 //When a call comes, I receive the incoming stream and create a video on my screen
                 call.on('stream', userVideoStream => {
                     addVideoStream(video, userVideoStream)
@@ -70,6 +68,7 @@ function Room(props) {
            
         })
         
+        //Emitted when a connection to the PeerServer is established.
         myPeer.current.on('open', id => {
             socket.current.emit('join-room', ROOM_ID, id,user.username )
            
@@ -80,10 +79,10 @@ function Room(props) {
             if (peers.current[userId])
                 peers.current[userId].close()
         })
-        socket.current.on('room-full',(msg)=>{
-            console.log("room Full");
-            // alert("Room that u are joing is full , Plaese try after some time");
-        })
+        // socket.current.on('room-full',(msg)=>{
+        //     console.log("room Full");
+        //     // alert("Room that u are joing is full , Plaese try after some time");
+        // })
         socket.current.on("init", (msg) => {
             console.log(msg);
             for (let i =  msg.length-1; i>=0; i--) {
@@ -170,29 +169,30 @@ function Room(props) {
 
     }, [])
 
-    function shareScreen() {
+    // function shareScreen() {
               
-            navigator.mediaDevices.getDisplayMedia({
-                video: {
-                    cursor: 'always'
-                },
-                audio: {
-                    echoCancellation: true,
-                    noiseSuppression: true
-                }
-            }).then(stream => {
-                const videoTrack = stream.getVideoTracks()[0];
-                videoTrack.onended = () => {
-                    // this.stopScreenShare();
-                };
-                console.log(myPeer.current.id)
+    //         navigator.mediaDevices.getDisplayMedia({
+    //             video: {
+    //                 cursor: 'always'
+    //             },
+    //             audio: {
+    //                 echoCancellation: true,
+    //                 noiseSuppression: true
+    //             }
+    //         }).then(stream => {
+    //             const videoTrack = stream.getVideoTracks()[0];
+    //             videoTrack.onended = () => {
+    //                 // this.stopScreenShare();
+    //             };
+    //             console.log(myPeer.current.id)
 
-            });
+    //         });
         
-    }
+    // }
 
     function connectToNewUser(userId, stream) {
 
+          //Call a peer, providing our mediaStream i.e stream
 
         const call = myPeer.current.call(userId, stream)
 
@@ -202,38 +202,46 @@ function Room(props) {
         video.style.margin = '5px'
 
 
-
+        // `stream` is the MediaStream of the remote peer.
         call.on('stream', userVideoStream => {
+             // Here we add it to our HTML video element.
             addVideoStream(video, userVideoStream)
-        })
+        });
 
         call.on('close', () => {
-            video.remove()
+            video.remove();
         })
 
-        peers.current[userId] = call
+        peers.current[userId] = call;
     }
 
+    //add video stream of incoming new user
     function addVideoStream(video, stream) {
-        video.srcObject = stream
+        video.srcObject = stream;
         video.addEventListener('loadedmetadata', () => {
-            video.play()
+            video.play();
         })
-        videoGrid.current.append(video)
+        videoGrid.current.append(video);
     }
     function addMyVideoStream(video, stream) {
-        video.srcObject = stream
+        video.srcObject = stream;
+        // The loadedmetadata event is fired when the metadata has been loaded.
         video.addEventListener('loadedmetadata', () => {
-            video.play()
+            video.play();
         })
-        myVideoGrid.current.append(video)
+        myVideoGrid.current.append(video);
     }
     window.onpopstate = () => {
         socket.current.close();
     }
+    const copyRoomIdToClipBoard=()=>{
+        navigator.clipboard.writeText(ROOM_ID);
+     }
+
 
     const playStop = () => {
 
+        //when user blocked the camera access
         if(myVideo===null || myVideo.srcObject===null) {
             alert("Give camera access to this app and reload");
             return;
@@ -248,28 +256,9 @@ function Room(props) {
             setStopVideo();
         }
     };
-    // let stream = myVideo.srcObject;
-    // const video = document.createElement('video')
-    // video.style.width = '100%'
-    // video.style.height = '100%'
-    // video.style.margin = '5px'
-
-    // navigator.mediaDevices.getDisplayMedia({
-    //     audio:true,
-    //     video:true
-    // }).then(screenStream=>{
-    //    //myVideo.srcObject=replaceTrack(stream.getVideoTracks()[0], screenStream.getVideoTracks()[0], stream);
-    // //  myVideo.srcObject=null;
-    //  let x=videoGrid[0];
-    //  addVideoStream(video,screenStream);
-
-    // //console.log(screenStream);
-
-   const copyRoomIdToClipBoard=()=>{
-    navigator.clipboard.writeText(ROOM_ID);
     
 
-   }
+  
 
     const muteUnmute = () => {
         if(myVideo===null || myVideo.srcObject===null) {
@@ -277,6 +266,7 @@ function Room(props) {
             return;
         }
 
+        //to check if mic is unmute
         const enabled = myVideo.srcObject.getAudioTracks()[0].enabled;
         if (enabled) {
             myVideo.srcObject.getAudioTracks()[0].enabled = false;

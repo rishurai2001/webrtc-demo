@@ -8,6 +8,8 @@ import { AuthContext } from "../context/AuthContext";
 function Room(props) {
     
     const ROOM_ID = props.match.params.roomId
+    
+    //user to get the user name and related details,it is not null when user is logged in
     const { user } = useContext(AuthContext);
 
     const myPeer = useRef();
@@ -29,10 +31,12 @@ function Room(props) {
 
 
         myPeer.current.on('open', id => {
+            //emit that a new user has joined the message room
             socket.current.emit('message-room', ROOM_ID, id,user.username)
 
         })
 
+        // to fetch messages in the chat room before the socket was connected to room
         socket.current.on("init", (msg) => {
             console.log(msg);
             for (let i =  msg.length-1; i>=0; i--) {
@@ -66,6 +70,7 @@ function Room(props) {
 
 
 
+        // when a new message arrives
         socket.current.on("createMessage", (msg) => {
             
             let li = document.createElement("li");
@@ -89,14 +94,16 @@ function Room(props) {
             chatBox.scrollTop = chatBox.scrollHeight;
         });
 
-
+        //while writing a message in input box to send
         document.getElementById('chat_message').addEventListener("keydown", (e) => {
 
             let msg = document.getElementById("chat_message");
 
             console.log(msg.value);
             if (e.key === 'Enter' && msg !== null && msg.value !== "") {
+                //after pressing the enter key by user create an emit
                 socket.current.emit("message", { roomId: ROOM_ID, content: msg.value });
+
                 let li = document.createElement("li");
                 li.innerHTML = msg.value;
                 li.style.backgroundColor = 'deepskyblue';
@@ -140,13 +147,7 @@ function Room(props) {
 
         <div className="messenger">
 
-            {/* <div className="chatMenu">
-                <div className="chatMenuWrapper">
-                
-                </div>
-            </div> */}
-
-
+            
             <div className="chatBox" id="chatBox">
 
                 <div className="chatBoxTop">
