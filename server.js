@@ -12,7 +12,6 @@ const authRoute = require("./routes/auth");
 const DB = `mongodb+srv://${process.env.DB_USERNAME}:${process.env.DB_PASSWORD}@video-engage-app.vj0ar.mongodb.net/mern-app?retryWrites=true&w=majority`
 const usersInRoom = [];
 app.use(express.json());
-app.use(express.static('public'))
 app.use(authRoute);
 
 //DB connection
