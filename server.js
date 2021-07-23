@@ -1,4 +1,3 @@
-const { memory } = require('console')
 const PORT = process.env.PORT || 8000
 const express = require('express')
 const app = express()
@@ -7,13 +6,11 @@ const io = require('socket.io')(server)    //The Server instance
 const { v4: uuidV4 } = require('uuid')
 const path = require('path')
 const mongoose = require("mongoose");
-const dotenv = require("dotenv")
-dotenv.config()
+const dotenv = require("dotenv").config()
 const Message = require('./models/Message');
 const authRoute = require("./routes/auth");
 const DB = `mongodb+srv://${process.env.DB_USERNAME}:${process.env.DB_PASSWORD}@video-engage-app.vj0ar.mongodb.net/mern-app?retryWrites=true&w=majority`
 const usersInRoom = [];
-const router = express.Router();
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(express.static('public'))
