@@ -13,9 +13,8 @@ import { AuthContext } from "./context/AuthContext";
 import Register from "./Pages/Register";
 function App() {
 
-  const { user } = useContext(AuthContext);
-  console.log(user);
-  console.log(user);
+ 
+  
  
   return (
 
@@ -23,22 +22,16 @@ function App() {
 
     <Router>
       <Switch>
-        {!user && <Route exact path="/register" ><Register /><Home /><NavBar /></Route>}
-        {!user && <Route path="/room" > <Login /><NavBar /></Route>}
-        {!user && <Route path="/chat" > <Login /><NavBar /></Route>}
-        {!user && <Route exact path="/JoinRoom"><Login /><NavBar /></Route>}
+        
 
         <Route exact path="/room/:roomId" component={Room} />
         <div>
           <NavBar />
           <Route exact path="/" component={Home} />
-          <Route path="/login">{user ? <Redirect to="/" /> : <Login />}</Route>
-          <Route path="/register">
-            {user ? <Redirect to="/" /> : <Register />}
-          </Route>
+           
 
-          <Route exact path="/CreateRoom"> {user ? <CreateRoom /> : <Login />}</Route>
-          <Route exact path="/JoinRoom"> {user ? <JoinRoom /> : <Login />}</Route>
+          <Route exact path="/CreateRoom"> <CreateRoom /> </Route>
+          <Route exact path="/JoinRoom"> <JoinRoom /> </Route>
           <Route exact path="/Chat" component={Chat} />
           <Route exact path="/Chat/:roomId" component={ChatRoom} />
         </div>

@@ -32,7 +32,7 @@ function Room(props) {
 
         myPeer.current.on('open', id => {
             //emit that a new user has joined the message room
-            socket.current.emit('message-room', ROOM_ID, id,user.username)
+            socket.current.emit('message-room', ROOM_ID, id,"username")
 
         })
 

@@ -2,15 +2,8 @@ import React, { useContext,useEffect } from 'react';
 import {Link} from 'react-router-dom'
 import { AuthContext } from "../context/AuthContext";
 const NavBar = () => {
-  const { user } = useContext(AuthContext);
-  
-    let authenticate;
-
-    useEffect(() => {
-      if(user===null) authenticate=false;
-      else authenticate=true;
-      
-    }, [])
+  // const { user } = useContext(AuthContext);
+   
   
   
   const listStyle = {
@@ -23,28 +16,28 @@ const NavBar = () => {
     
   }
    
-   const handleLogin=()=>{
+  //  const handleLogin=()=>{
     
     
-       if(authenticate) {
+  //      if(authenticate) {
         
-         authenticate=false;
-         localStorage.clear();
-         console.log(localStorage);
+  //        authenticate=false;
+  //        localStorage.clear();
+  //        console.log(localStorage);
         
-         window.location.href="./"
-        return;
-       }
+  //        window.location.href="./"
+  //       return;
+  //      }
     
        
-       else {
-         console.log("login");
-         window.location.href="./Login"
-       }
+  //      else {
+  //        console.log("login");
+  //        window.location.href="./Login"
+  //      }
      
    
 
-   }
+  //  }
     const navStyle={
                display:'flex',
                backgroundColor:'rgba(9,40,68,255)',
@@ -82,12 +75,12 @@ const NavBar = () => {
                    <li className="mr-5 text-white" >
                   <Link to="/Chat" style={listStyle} >CHAT</Link>
                </li> 
-                <li className=" mr-10 text-white">
+                {/* <li className=" mr-10 text-white">
                   
                    <button id="button" onClick={handleLogin}  >
                      {user?
                       <div>
-                        {/* <img src="https://w7.pngwing.com/pngs/81/570/png-transparent-profile-logo-computer-icons-user-user-blue-heroes-logo-thumbnail.png" style={{height:'50px',width:'50px',marginTop:'5px'}}/> */}
+                        //<img src="https://w7.pngwing.com/pngs/81/570/png-transparent-profile-logo-computer-icons-user-user-blue-heroes-logo-thumbnail.png" style={{height:'50px',width:'50px',marginTop:'5px'}}/>
                         <i class="bi bi-person-circle " >
                         
                         </i><br/>Logout
@@ -100,7 +93,7 @@ const NavBar = () => {
                    </button>
                    
                    
-                </li>
+                </li> */}
 
             </ul>
                        

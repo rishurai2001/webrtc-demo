@@ -6,7 +6,7 @@ import { AuthContext } from "../context/AuthContext";
 
 function Room(props) {
     const { user } = useContext(AuthContext);
-    console.log(user.username);
+   
     const ROOM_ID = props.match.params.roomId;
 
     const myPeer = useRef();
@@ -70,7 +70,7 @@ function Room(props) {
         
         //Emitted when a connection to the PeerServer is established.
         myPeer.current.on('open', id => {
-            socket.current.emit('join-room', ROOM_ID, id,user.username )
+            socket.current.emit('join-room', ROOM_ID, id,"username" )
            
         })
 

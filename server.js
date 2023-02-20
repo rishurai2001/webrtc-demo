@@ -9,26 +9,10 @@ const mongoose = require("mongoose");
 const dotenv = require("dotenv").config()
 const Message = require('./models/Message');
 const authRoute = require("./routes/auth");
-const DB = `mongodb+srv://${process.env.DB_USERNAME}:${process.env.DB_PASSWORD}@video-engage-app.vj0ar.mongodb.net/mern-app?retryWrites=true&w=majority`
 const usersInRoom = [];
 app.use(express.json());
 app.use(authRoute);
 
-//DB connection
-mongoose
-  .connect(DB, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-    useFindAndModify: false,
-    useCreateIndex: true,
-  })
-  .then((result) => {
-    console.log(result);
-  })
-  .catch((err) => {
-    console.log(err);
-
-  });
 
 
 //Server static assets if in production
@@ -75,13 +59,7 @@ io.of("/Room").on('connection', (socket) => {
     socket.broadcast.to(roomId).emit('user-connected', userId, username)
 
 
-    Message.find({ "roomId": roomId }).sort({ createdAt: -1 }).limit(10).exec((err, messages) => {
-      if (err) return console.error(err);
-      console.log("msg fetched")
-      // Send the last 10 messages to the user.
-      socket.emit('init', messages);
-    });
-
+    
 
 
     //when someone in the room sends a message
@@ -95,9 +73,7 @@ io.of("/Room").on('connection', (socket) => {
       });
 
       // Save the message to the database.
-      message.save((err) => {
-        if (err) return console.error(err);
-      });
+    
       socket.broadcast.to(roomId).emit("createMessage", message, username);
     })
 
@@ -134,20 +110,7 @@ io.of("/Room").on('connection', (socket) => {
     usersInRoom.push(userId);
 
     socket.on("message", (msg) => {
-      console.log("msg arrived:");
-      console.log(msg);
-      const message = new Message({
-
-        roomId: msg.roomId,
-        content: msg.content,
-        sender: username,
-      });
-
-      // Save the message to the database.
-      message.save((err) => {
-        if (err) return console.error(err);
-      });
-      console.log("messdage saved to db");
+      
       socket.broadcast.to(roomId).emit("createMessage", message, username);
     })
 
